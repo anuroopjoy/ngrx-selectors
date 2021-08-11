@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="vertical-menu">
+    <ng-container *ngFor="let category of categories$ | async; let idx = index">
+      <a
+        (click)="showDetails(idx)"
+        [ngClass]="{ active: category.name === selectedCategory.name }"
+        >{{ category.name }}</a
+      >
+    </ng-container>
+  </div>
+  <div class="column">
+    <div class="row" *ngFor="let movieColumn of movies$ | async">
+      <ng-container *ngFor="let movie of movieColumn; let idx = index">
+        <div
+          *ngIf="idx % 3 === 0"
+          class="column"
+          style="background-color: #aaa"
+        >
+          {{ movie.name }}
+        </div>
+        <div
+          *ngIf="idx % 3 === 1"
+          class="column"
+          style="background-color: #bbb"
+        >
+          {{ movie.name }}
+        </div>
+        <div
+          *ngIf="idx % 3 === 2"
+          class="column"
+          style="background-color: #ccc"
+        >
+          {{ movie.name }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
