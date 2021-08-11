@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Category } from './category/category.interfaces';
 import { movieList } from './movies/movies.constants';
-import { Category, Movie } from './movies/movies.interfaces';
+import { Movie } from './movies/movies.interfaces';
 
 @Injectable({
   providedIn: 'root',

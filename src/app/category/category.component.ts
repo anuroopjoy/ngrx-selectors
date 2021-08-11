@@ -2,14 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { AppState } from '../app.interface';
 import { DataService } from '../data.service';
-import {
-  getCategories,
-  setSelectedCategory,
-  setSelectedMovies,
-} from '../movies/movies.actions';
-import { Category } from '../movies/movies.interfaces';
-import { MovieState } from '../movies/movies.reducers';
+import { categoriesSelector, currentCategorySelector } from './categories.selectors';
+import { getCategories, setSelectedCategory } from './category.actions';
+import { Category } from './category.interfaces';
 
 @Component({
   selector: 'app-category',
@@ -23,11 +21,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private store: Store<{ movies: MovieState }>
+    private store: Store<AppState>
   ) {
-    this.categories$ = this.store.select('movies', 'allCategories');
+    this.categories$ = this.store.select(categoriesSelector);
     this.store
-      .select('movies', 'selectedCategory')
+      .select(currentCategorySelector)
       .pipe(takeUntil(this.#stream))
       .subscribe((category) => {
         this.selectedCategory = category;
@@ -49,6 +47,5 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   showDetails(index: number) {
     this.store.dispatch(setSelectedCategory({ position: index }));
-    this.store.dispatch(setSelectedMovies());
   }
 }

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
+import { AppState } from '../app.interface';
 import { DataService } from '../data.service';
-import {
-  getMovies,
-  setSelectedCategory,
-  setSelectedMovies,
-} from './movies.actions';
+import { getMovies, setSelectedMovies } from './movies.actions';
 import { Movie } from './movies.interfaces';
-import { MovieState } from './movies.reducers';
+import { moviesSelector } from './movies.selectors';
 
 @Component({
   selector: 'app-movies',
@@ -20,15 +18,13 @@ export class MoviesComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private store: Store<{ movies: MovieState }>
+    private store: Store<AppState>
   ) {
-    this.movies$ = this.store.select('movies', 'selectedMovies');
+    this.movies$ = this.store.select(moviesSelector);
   }
 
   ngOnInit(): void {
     const movies = this.dataService.getMovies();
     this.store.dispatch(getMovies({ movies }));
-    this.store.dispatch(setSelectedMovies());
   }
-
 }

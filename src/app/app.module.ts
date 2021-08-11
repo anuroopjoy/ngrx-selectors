@@ -8,12 +8,21 @@ import { MoviesComponent } from './movies/movies.component';
 import { moviesReducer } from './movies/movies.reducers';
 import { CategoryComponent } from './category/category.component';
 import { ContainerComponent } from './container/container.component';
+import { categoryReducer } from './category/category.reducers';
 
 @NgModule({
-  declarations: [AppComponent, MoviesComponent, CategoryComponent, ContainerComponent],
+  declarations: [
+    AppComponent,
+    MoviesComponent,
+    CategoryComponent,
+    ContainerComponent,
+  ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ movies: moviesReducer }, {}),
+    StoreModule.forRoot(
+      { movies: moviesReducer, categories: categoryReducer },
+      {}
+    ),
     StoreDevtoolsModule.instrument(),
   ],
   providers: [],
