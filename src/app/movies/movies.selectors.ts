@@ -6,10 +6,9 @@ import { CategoryState } from '../category/category.reducers';
 import { Movie } from './movies.interfaces';
 import { MovieState } from './movies.reducers';
 
-export const selectMovies = createFeatureSelector<AppState, MovieState>(movies);
-export const selectCategories = createFeatureSelector<AppState, CategoryState>(
-  categories
-);
+export const selectMovies = createFeatureSelector<MovieState>(movies);
+export const selectCategories =
+  createFeatureSelector<CategoryState>(categories);
 
 export const moviesSelector = createSelector(
   selectMovies,

@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { AppState } from '../app.interface';
 import { DataService } from '../data.service';
-import { categoriesSelector, currentCategorySelector } from './categories.selectors';
+import {
+  categoriesSelector,
+  currentCategorySelector,
+} from './categories.selectors';
 import { getCategories, setSelectedCategory } from './category.actions';
 import { Category } from './category.interfaces';
 
@@ -14,22 +15,13 @@ import { Category } from './category.interfaces';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
 })
-export class CategoryComponent implements OnInit, OnDestroy {
+export class CategoryComponent implements OnInit {
   categories$!: Observable<Category[]>;
-  selectedCategory!: Category;
-  #stream = new Subject();
+  selectedCategory$!: Observable<Category>;
 
-  constructor(
-    private dataService: DataService,
-    private store: Store<AppState>
-  ) {
+  constructor(private dataService: DataService, private readonly store: Store) {
     this.categories$ = this.store.select(categoriesSelector);
-    this.store
-      .select(currentCategorySelector)
-      .pipe(takeUntil(this.#stream))
-      .subscribe((category) => {
-        this.selectedCategory = category;
-      });
+    this.selectedCategory$ = this.store.select(currentCategorySelector);
   }
 
   ngOnInit(): void {
@@ -38,11 +30,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if (categories?.length) {
       this.store.dispatch(setSelectedCategory({ position: 0 }));
     }
-  }
-
-  ngOnDestroy(): void {
-    this.#stream.next();
-    this.#stream.complete();
   }
 
   showDetails(index: number) {

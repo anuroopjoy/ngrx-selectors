@@ -18,7 +18,7 @@ export class MoviesComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private store: Store<AppState>
+    private store: Store
   ) {
     this.movies$ = this.store.select(moviesSelector);
   }

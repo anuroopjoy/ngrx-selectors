@@ -2,7 +2,9 @@
   <ng-container *ngFor="let category of categories$ | async; let idx = index">
     <a
       (click)="showDetails(idx)"
-      [ngClass]="{ active: category.name === selectedCategory.name }"
+      [ngClass]="{
+        active: category.name === (selectedCategory$ | async)?.name
+      }"
       >{{ category.name }}</a
     >
   </ng-container>
