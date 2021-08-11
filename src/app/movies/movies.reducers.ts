@@ -5,12 +5,10 @@ import { groupBy } from 'lodash-es';
 
 export interface MovieState {
   allMovies: Record<string, Movie[]>;
-  selectedMovies: Movie[][];
 }
 
 export const initialState: MovieState = {
   allMovies: {},
-  selectedMovies: [],
 };
 
 export const moviesReducer = createReducer(
