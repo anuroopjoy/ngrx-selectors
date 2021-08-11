@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { AppState } from '../app.interface';
 import { DataService } from '../data.service';
-import { getMovies, setSelectedMovies } from './movies.actions';
+import { getMovies } from './movies.actions';
 import { Movie } from './movies.interfaces';
-import { moviesSelector } from './movies.selectors';
+import { filteredMovieSelector } from './movies.selectors';
 
 @Component({
   selector: 'app-movies',
@@ -16,11 +15,8 @@ import { moviesSelector } from './movies.selectors';
 export class MoviesComponent implements OnInit {
   movies$!: Observable<Movie[][]>;
 
-  constructor(
-    private dataService: DataService,
-    private store: Store
-  ) {
-    this.movies$ = this.store.select(moviesSelector);
+  constructor(private dataService: DataService, private store: Store) {
+    this.movies$ = this.store.pipe(filteredMovieSelector);
   }
 
   ngOnInit(): void {

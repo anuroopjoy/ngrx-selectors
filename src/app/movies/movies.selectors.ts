@@ -1,7 +1,9 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { cloneDeep, isEmpty } from 'lodash-es';
+import { pipe } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-import { AppState, categories, movies } from '../app.interface';
+import { categories, movies } from '../app.interface';
 import { CategoryState } from '../category/category.reducers';
 import { Movie } from './movies.interfaces';
 import { MovieState } from './movies.reducers';
@@ -24,4 +26,9 @@ export const moviesSelector = createSelector(
     while (movies.length) selectedMovies.push(movies.splice(0, 3));
     return selectedMovies;
   }
+);
+
+export const filteredMovieSelector = pipe(
+  select(moviesSelector),
+  filter((item) => !!item?.length)
 );
