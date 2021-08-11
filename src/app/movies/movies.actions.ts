@@ -6,6 +6,3 @@ export const getMovies = createAction(
   '[Movie Component] GetMovies',
   props<{ movies: Movie[] }>()
 );
-export const setSelectedMovies = createAction(
-  '[Movie Component] SetSelectedMovies'
-);
