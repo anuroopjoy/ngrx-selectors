@@ -6,9 +6,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
 import { MoviesComponent } from './movies/movies.component';
 import { moviesReducer } from './movies/movies.reducers';
+import { CategoryComponent } from './category/category.component';
+import { ContainerComponent } from './container/container.component';
 
 @NgModule({
-  declarations: [AppComponent, MoviesComponent],
+  declarations: [AppComponent, MoviesComponent, CategoryComponent, ContainerComponent],
   imports: [
     BrowserModule,
     StoreModule.forRoot({ movies: moviesReducer }, {}),
